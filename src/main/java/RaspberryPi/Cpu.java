@@ -34,13 +34,15 @@ public class Cpu {
 
     public boolean isCpuThrottling() {
         int frequency = getFrequency();
+        int deviation = 1;
 
-        //[600_010,1_199_990]
-        if (frequency > (LOW_FREQUENCY + 10) && frequency < (HIGH_FREQUENCY - 10))
+        //(600_001,1_199_999)
+        if (frequency > (LOW_FREQUENCY + deviation)
+                && frequency < (HIGH_FREQUENCY - deviation))
             return true;
 
-        //(infinity, 599_990]
-        if (frequency < (LOW_FREQUENCY - 10))
+        //(infinity, 599_999)
+        if (frequency < (LOW_FREQUENCY - deviation))
             return true;
 
         return false;

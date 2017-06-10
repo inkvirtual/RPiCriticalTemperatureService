@@ -44,35 +44,56 @@ public class RPiCriticalTemperatureService implements IService {
 
     @Override
     public void start() {
-        System.out.println("Starting RPi Critical Temperature Service");
+        System.out.println("----------------------------------------");
+        System.out.println("RPi Critical Temperature Service started!\n");
+        sleep(2_000);
 
         boolean terminated = false;
         double cpuTemperature;
+        int cpuFrequency;
 
         while (!terminated) {
             cpuTemperature = controller.getCpuTemperature();
 
+            // DEBUG
+            {
+                System.out.println("DEBUG: Cpu Temp: " + cpuTemperature + "C");
+            }
+
+
             // If critical temperature detected
             if (cpuTemperature >= shutdownTempC) {
-                System.out.println("CPU Temperature: " + cpuTemperature + ", shutdown temperature: " + shutdownTempC);
-                System.out.println("Critical temperature detected, shutting down Raspberry Pi...");
+                System.out.println("WARN: CPU Temperature: " + cpuTemperature + "C, shutdown temperature: " + shutdownTempC + "C");
+                System.out.println("\nCRITICAL: Critical temperature detected, shutting down Raspberry Pi...");
 
                 controller.shutdown();
+                terminated = true;
             }
 
             // If RPi should shutdown on CPU Throttling
             if (shutdownOnThrottle) {
+                cpuFrequency = controller.getCpuFrequency();
+
+                // DEBUG
+                {
+                    System.out.println("DEBUG: CPU Frequency: " + cpuFrequency + "MHz");
+                }
 
                 // Shutdown if CPU throttling detected
                 if (controller.isCpuThrottling()) {
-                    System.out.println("CPU Throttling detected: " + controller.getCpuFrequency());
-                    System.out.println("Shutting down Raspberry Pi...");
+                    System.out.println("WARN: CPU Throttling detected: " + cpuFrequency + "MHz");
+                    System.out.println("\nCRITICAL: Shutting down Raspberry Pi...");
+
                     controller.shutdown();
+                    terminated = true;
                 }
             }
 
             sleep(checkTempIntervalS * 1_000);
         }
+
+        System.out.println("\n-------------------------------------------");
+        System.out.println("RPi Critical Temperature Service terminated!");
     }
 
     // TODO: find a better way to mock controller
