@@ -23,6 +23,9 @@ public class Cpu {
     }
 
     public double getTemperature() {
+        // temp=39.7'C
+        String temperatureString = bash.execute(resourcesHelper.getFullPath("get_cpu_temperature.sh"));
+
         return Double.parseDouble(bash.execute(
                 resourcesHelper.getFullPath("get_cpu_temperature.sh")));
     }

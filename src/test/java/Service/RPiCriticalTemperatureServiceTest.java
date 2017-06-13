@@ -54,7 +54,7 @@ public class RPiCriticalTemperatureServiceTest {
     public void test_start_criticalTemp() throws Exception {
         Map<String, String> setConfig = setupConfig(
                 75,
-                2,
+                1,
                 false
         );
 
@@ -84,7 +84,7 @@ public class RPiCriticalTemperatureServiceTest {
     public void test_start_throttle() throws Exception {
         Map<String, String> setConfig = setupConfig(
                 75,
-                2,
+                1,
                 true
         );
 

@@ -1,5 +1,7 @@
 package Resources;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 /**
  * Created by fanta on 5/27/17.
  */
@@ -55,5 +57,28 @@ public class ResourcesHelper {
         }
 
         return true;
+    }
+
+    public String getSubstring(String content, String leftParam, String rightParam) {
+        if (content == null || content.length() == 0)
+            throw new IllegalArgumentException("Null or empty content");
+
+        if (leftParam == null || leftParam.length() == 0)
+            throw new IllegalArgumentException("Null or empty leftParam");
+
+        if (rightParam == null || rightParam.length() == 0)
+            throw new IllegalArgumentException("Null or empty rightParam");
+
+        int beginIndex = content.indexOf(leftParam);
+        if (beginIndex == -1)
+            throw new IllegalArgumentException("Incorrect leftParam");
+
+        String updatedContent = content.substring(beginIndex + leftParam.length());
+
+        int endIndex = updatedContent.indexOf(rightParam);
+        if (endIndex == -1)
+            throw new IllegalArgumentException("Incorrect rightParam");
+
+        return updatedContent.substring(0, endIndex);
     }
 }
