@@ -63,19 +63,31 @@ public class ResourcesHelper {
         if (content == null || content.length() == 0)
             throw new IllegalArgumentException("Null or empty content");
 
-        if (leftParam == null || leftParam.length() == 0)
-            throw new IllegalArgumentException("Null or empty leftParam");
+//        if (leftParam == null || leftParam.length() == 0)
+//            throw new IllegalArgumentException("Null or empty leftParam");
+//
+//        if (rightParam == null || rightParam.length() == 0)
+//            throw new IllegalArgumentException("Null or empty rightParam");
 
-        if (rightParam == null || rightParam.length() == 0)
-            throw new IllegalArgumentException("Null or empty rightParam");
+        int beginIndex = 0;
+        String updatedContent = content;
 
-        int beginIndex = content.indexOf(leftParam);
+        if (leftParam != null && leftParam.length() > 0) {
+            beginIndex = content.indexOf(leftParam);
+            updatedContent = content.substring(beginIndex + leftParam.length());
+        }
+
         if (beginIndex == -1)
             throw new IllegalArgumentException("Incorrect leftParam");
 
-        String updatedContent = content.substring(beginIndex + leftParam.length());
+        if (updatedContent == null)
+            return null;
 
-        int endIndex = updatedContent.indexOf(rightParam);
+        int endIndex = updatedContent.length();
+
+        if (rightParam != null && rightParam.length() > 0)
+            endIndex = updatedContent.indexOf(rightParam);
+
         if (endIndex == -1)
             throw new IllegalArgumentException("Incorrect rightParam");
 

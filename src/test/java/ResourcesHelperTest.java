@@ -2,8 +2,6 @@ import Resources.ResourcesHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by fanta on 5/28/17.
  */
@@ -103,78 +101,46 @@ public class ResourcesHelperTest {
         String fileName = "script.sh";
         ResourcesHelper resourcesHelper = new ResourcesHelper(resourcesPath);
 
-        Assert.assertEquals("Full path not correct" , resourcesHelper.getFullPath(fileName), resourcesPath + "/" + fileName);
-    }
-
-    @Test
-    public void test_getSubstring_1() throws Exception {
-        init("/home/fanta");
-
-        String content = "12left_substring_right23";
-
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "12left", "right23"));
-    }
-
-    @Test
-    public void test_getSubstring_2() throws Exception {
-        init("/home/fanta");
-
-        String content = "_substring_";
-
-        Assert.assertEquals("substring",
-                resourcesHelper.getSubstring(content, "_", "_"));
-    }
-
-    @Test
-    public void test_getSubstring_3() throws Exception {
-        init("/home/fanta");
-
-        String content = "12left_substring_right23";
-
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "12left", "right23"));
-    }
-
-    @Test
-    public void test_getSubstring_4() throws Exception {
-        init("/home/fanta");
-
-        String content = "12left_substring_right23";
-
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "left", "right23"));
-    }
-
-    @Test
-    public void test_getSubstring_5() throws Exception {
-        init("/home/fanta");
-
-        String content = "12left_substring_right23";
-
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "12left", "right"));
+        Assert.assertEquals("Full path not correct", resourcesHelper.getFullPath(fileName), resourcesPath + "/" + fileName);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_getSubstring_invalidArgument() throws Exception {
+    public void test_getSubstring_invalidArgument_content_1() throws Exception {
         init("/home/fanta");
 
         String content = null;
 
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "12left", "right23"));
+        resourcesHelper.getSubstring(content, "12left", "right23");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_getSubstring_invalidArgument_2() throws Exception {
+    public void test_getSubstring_invalidArgument_content_2() throws Exception {
         init("/home/fanta");
 
         String content = "";
 
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "12left", "right23"));
+        resourcesHelper.getSubstring(content, "12left", "right23");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_getSubstring_invalidArgument_leftParam_1() throws Exception {
+        init("/home/fanta");
+
+        String content = "12_substring_34";
+
+        Assert.assertEquals("_substring_",
+                resourcesHelper.getSubstring(content, "21", "right23"));
+    }
+
+//    @Test(expected = IllegalArgumentException.class)
+//    public void test_getSubstring_invalidArgument_leftParam_1() throws Exception {
+//        init("/home/fanta");
+//
+//        String content = "12_substring_34";
+//
+//        Assert.assertEquals("_substring_",
+//                resourcesHelper.getSubstring(content, null, "right23"));
+//    }
 
     // TODO: switch all tests related to getSubstring to use paramterized tests - more convenient!
 
