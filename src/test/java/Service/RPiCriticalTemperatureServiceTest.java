@@ -178,6 +178,7 @@ public class RPiCriticalTemperatureServiceTest {
         config.put("rpi.shutdown.temperature.celsius", String.valueOf(shutdownTempC));
         config.put("rpi.check.temp.interval.s", String.valueOf(checkTempIntervalS));
         config.put("rpi.throttle.shutdown", String.valueOf(shutdownOnThrottle));
+        config.put("service.exit.if.terminated", String.valueOf(true));
 
         return config;
     }

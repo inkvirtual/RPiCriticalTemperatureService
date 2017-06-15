@@ -104,46 +104,6 @@ public class ResourcesHelperTest {
         Assert.assertEquals("Full path not correct", resourcesHelper.getFullPath(fileName), resourcesPath + "/" + fileName);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSubstring_invalidArgument_content_1() throws Exception {
-        init("/home/fanta");
-
-        String content = null;
-
-        resourcesHelper.getSubstring(content, "12left", "right23");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSubstring_invalidArgument_content_2() throws Exception {
-        init("/home/fanta");
-
-        String content = "";
-
-        resourcesHelper.getSubstring(content, "12left", "right23");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSubstring_invalidArgument_leftParam_1() throws Exception {
-        init("/home/fanta");
-
-        String content = "12_substring_34";
-
-        Assert.assertEquals("_substring_",
-                resourcesHelper.getSubstring(content, "21", "right23"));
-    }
-
-//    @Test(expected = IllegalArgumentException.class)
-//    public void test_getSubstring_invalidArgument_leftParam_1() throws Exception {
-//        init("/home/fanta");
-//
-//        String content = "12_substring_34";
-//
-//        Assert.assertEquals("_substring_",
-//                resourcesHelper.getSubstring(content, null, "right23"));
-//    }
-
-    // TODO: switch all tests related to getSubstring to use paramterized tests - more convenient!
-
     private void init(String resourcesPath) {
         this.resourcesPath = resourcesPath;
         resourcesHelper = new ResourcesHelper(resourcesPath);

@@ -31,20 +31,19 @@ public class ResourcesHelperValidParamsTest {
     @Parameterized.Parameters
     public static Collection<Object[]> paramMethod() {
         return Arrays.asList(new Object[][] {
-                {"_substring_", "12_substring_34", "12", "34"},
-                {"_substring_", "12_substring_24", "2", "2"},
-//                {"_substring_", "_substring_", null, "_"}, //TODO: update getSubstring() method to pass this test
-                {"_substring_", "_substring_34", "", "3"},
-                {"_substring_", "_substring_34", "", "3"},
-                {"_substring_", "12_substring_", "12", ""},
-                {"_substring_", "12_substring_", "12", null},
-                {"_substring_", "_substring_", null, null},
-                {"_substring_", "_substring_", "", ""},
-                {"_substring_", "_substring_", null, ""},
-                {"_substring_", "_substring_", "", null},
-                {"_substring_", "12_substring_34", "34", null},
-                {"_substring_", "12_substring_34", "34", "34"},
-                {"_substring_", "12_substring_23", "2", "2"},
+                {"_substring_", "12_substring_34", "12", "34"}, //0
+                {"_substring_", "12_substring_24", "2", "2"},   //1
+//                {"_substring_", "_substring_", null, "_"},    //TODO: update getSubstring() method to pass this test
+                {"_substring_", "_substring_34", "", "3"},      //2
+                {"_substring_", "_substring_34", "", "3"},      //3
+                {"_substring_", "12_substring_", "12", ""},     //4
+                {"_substring_", "12_substring_", "12", null},   //5
+                {"_substring_", "_substring_", null, null},     //6
+                {"_substring_", "_substring_", "", ""},         //7
+                {"_substring_", "_substring_", null, ""},       //8
+                {"_substring_", "_substring_", "", null},       //9
+                {"", "12_substring_34", "34", null},            //10
+                {"_substring_", "12_substring_23", "2", "2"},   //11
         });
     }
 

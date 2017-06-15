@@ -16,6 +16,9 @@ public class RPiCriticalTemperatureService implements IService {
 
     private Controller controller;
 
+    private boolean exitServiceIfTerminated;
+    private boolean serviceTerminated = false;
+
     // TODO: switch to interface, not class implementation
     public RPiCriticalTemperatureService(Configuration configuration) {
         init(configuration);
@@ -37,6 +40,8 @@ public class RPiCriticalTemperatureService implements IService {
         checkTempIntervalS = Integer.parseInt(config.getOrDefault("rpi.check.temp.interval.s", "15"));
         shutdownOnThrottle = Boolean.parseBoolean(config.getOrDefault("rpi.throttle.shutdown", "true"));
 
+        exitServiceIfTerminated = Boolean.parseBoolean(config.getOrDefault("service.exit.if.terminated", "false"));
+
         controller = new Controller(configuration.getResourcesHelper());
 
         System.out.println(config.toString());
@@ -48,11 +53,10 @@ public class RPiCriticalTemperatureService implements IService {
         System.out.println("RPi Critical Temperature Service started!\n");
         sleep(2_000);
 
-        boolean terminated = false;
         double cpuTemperature;
         int cpuFrequency;
 
-        while (!terminated) {
+        while (!stopExecution()) {
             cpuTemperature = controller.getCpuTemperature();
 
             // DEBUG
@@ -67,7 +71,7 @@ public class RPiCriticalTemperatureService implements IService {
                 System.out.println("\nCRITICAL: Critical temperature detected, shutting down Raspberry Pi...");
 
                 controller.shutdown();
-                terminated = true;
+                serviceTerminated = true;
             }
 
             // If RPi should shutdown on CPU Throttling
@@ -85,7 +89,7 @@ public class RPiCriticalTemperatureService implements IService {
                     System.out.println("\nCRITICAL: Shutting down Raspberry Pi...");
 
                     controller.shutdown();
-                    terminated = true;
+                    serviceTerminated = true;
                 }
             }
 
@@ -93,7 +97,11 @@ public class RPiCriticalTemperatureService implements IService {
         }
 
         System.out.println("\n-------------------------------------------");
-        System.out.println("RPi Critical Temperature Service terminated!");
+        System.out.println("RPi Critical Temperature Service Terminated!");
+    }
+
+    private boolean stopExecution() {
+        return (serviceTerminated && exitServiceIfTerminated);
     }
 
     // TODO: find a better way to mock controller

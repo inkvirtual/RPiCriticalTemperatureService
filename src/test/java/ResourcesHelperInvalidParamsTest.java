@@ -30,16 +30,16 @@ public class ResourcesHelperInvalidParamsTest {
     @Parameterized.Parameters
     public static Collection<Object[]> paramMethod() {
         return Arrays.asList(new Object[][] {
-                {null, "12", "34"},
-                {"", "12", "34"},
-                {"12_substring_34", "34", "34"},
-                {"12_substring_34", "23", "34"},
-                {"12_substring_34", "33", "33"},
-                {"12_substring_34", "12", "33"},
-                {"12_substring_34", "", "33"},
-                {"12_substring_34", null, "33"},
-                {"12_substring_34", null, null},
-                {null, null, null},
+                {null, "12", "34"},              //0
+                {"", "12", "34"},                //1
+                {"12_substring_34", "34", "34"}, //2
+                {"12_substring_34", "23", "34"}, //3
+                {"12_substring_34", "33", "33"}, //4
+                {"12_substring_34", "12", "33"}, //5
+                {"12_substring_34", "", "33"},   //6
+                {"12_substring_34", "34", "34"}, //7
+                {"12_substring_34", null, "33"}, //8
+                {null, null, null},              //9
         });
     }
 
