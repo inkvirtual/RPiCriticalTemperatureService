@@ -21,10 +21,6 @@ public class Controller {
         this.resourcesHelper = resourcesHelper;
     }
 
-    public int getCpuUsage() {
-        return cpu.getUsage();
-    }
-
     public int getCpuFrequency() {
         return cpu.getFrequency();
     }

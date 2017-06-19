@@ -44,7 +44,7 @@ public class ResourcesHelperInvalidParamsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_getString() throws Exception {
+    public void substringThrowsExceptionIfIllegalArgumentsProvided() throws Exception {
         init("/home/fanta/");
 
         resourcesHelper.getSubstring(content, leftParam, rightParam);

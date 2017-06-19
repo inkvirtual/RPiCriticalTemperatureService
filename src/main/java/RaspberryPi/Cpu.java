@@ -17,22 +17,20 @@ public class Cpu {
         this.bash = bash;
     }
 
-    public int getUsage() {
-        return Integer.parseInt(bash.execute(
-                resourcesHelper.getFullPath("get_cpu_usage.sh")));
-    }
-
     public double getTemperature() {
         // temp=39.7'C
         String temperatureString = bash.execute(resourcesHelper.getFullPath("get_cpu_temperature.sh"));
 
-        return Double.parseDouble(bash.execute(
-                resourcesHelper.getFullPath("get_cpu_temperature.sh")));
+        return Double.parseDouble(resourcesHelper.getSubstring(temperatureString, "=", "'C"));
     }
 
     public int getFrequency() {
-        return Integer.parseInt(bash.execute(
-                resourcesHelper.getFullPath("get_cpu_frequency.sh")));
+        // frequency(45)=600000000
+        // 600_000_000
+        String frequencyString = bash.execute(resourcesHelper.getFullPath("get_cpu_frequency.sh"));
+        String parsedFrequency = resourcesHelper.getSubstring(frequencyString, "=", "");
+
+        return Integer.parseInt(parsedFrequency) / 1_000;
     }
 
     public boolean isCpuThrottling() {

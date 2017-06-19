@@ -30,6 +30,7 @@ public class Main {
         boolean useDefaultResPath = false;
 
         if (null != args && args.length > 1) {
+            //TODO: add proper logger !!!
             System.err.println("too many arguments provided");
             useDefaultResPath = true;
         } else if (null == args || args.length == 0) {

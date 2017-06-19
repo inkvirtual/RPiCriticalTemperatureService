@@ -10,17 +10,17 @@ public class ResourcesHelperTest {
     private ResourcesHelper resourcesHelper;
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_invalidArgumentPath_null() throws Exception {
+    public void initializationThrowsExceptionIfNullResourcesPathArg() throws Exception {
         new ResourcesHelper(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_invalidArgumentPath_empty() throws Exception {
+    public void initializationThrowsExceptionIfEmptyResourcesPathArg() throws Exception {
         new ResourcesHelper("");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_checkPropsFileNameValid_nullFileName() throws Exception {
+    public void filenameThrowsExceptionIfNullFileName() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -28,7 +28,7 @@ public class ResourcesHelperTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_checkPropsFileNameValid_emptyFileName() throws Exception {
+    public void filenameThrowsExceptionIfEmptyFileName() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -36,7 +36,7 @@ public class ResourcesHelperTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_checkPropsFileNameValid_invalidExtension() throws Exception {
+    public void filenameIsValidThrowsExceptionWhenInvalidExtension() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -44,7 +44,7 @@ public class ResourcesHelperTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_checkPropsFileNameValid_noExtension() throws Exception {
+    public void filenameIsValidThrowsExceptionWhenNoExtension() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -52,15 +52,23 @@ public class ResourcesHelperTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void test_checkPropsFileNameValid_noExtension2() throws Exception {
+    public void filenameIsValidThrowsExceptionWhenNoExtension2() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
         resourcesHelper.checkPropsFileNameValid("file");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void filenameIsValidThrowsExceptionWhenNoExtension3() throws Exception {
+        resourcesPath = "/home/fanta";
+        resourcesHelper = new ResourcesHelper(resourcesPath);
+
+        resourcesHelper.checkPropsFileNameValid("fileproperties");
+    }
+
     @Test
-    public void test_checkPropsFileNameValid() throws Exception {
+    public void filenameIsValidWhenValidParameters() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -69,7 +77,7 @@ public class ResourcesHelperTest {
     }
 
     @Test
-    public void test_normalizePath_1() throws Exception {
+    public void pathIsNormalizedIfResourcesPathDoesNotContainSlash() throws Exception {
         resourcesPath = "/home/fanta";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -78,7 +86,7 @@ public class ResourcesHelperTest {
     }
 
     @Test
-    public void test_normalizePath_2() throws Exception {
+    public void pathIsNormalizedIfResourcesPathContainSlash() throws Exception {
         resourcesPath = "/home/fanta/";
         resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -87,7 +95,7 @@ public class ResourcesHelperTest {
     }
 
     @Test
-    public void test_getFullPath_nullOrEmptyFileName() throws Exception {
+    public void fullPathIsNullWhenNullOrEmptyFileName() throws Exception {
         resourcesPath = "/home/fanta";
         ResourcesHelper resourcesHelper = new ResourcesHelper(resourcesPath);
 
@@ -96,7 +104,7 @@ public class ResourcesHelperTest {
     }
 
     @Test
-    public void test_getFullPath_validFileName() throws Exception {
+    public void fullPathIsCorrectWhenValidFileName() throws Exception {
         resourcesPath = "/home/fanta";
         String fileName = "script.sh";
         ResourcesHelper resourcesHelper = new ResourcesHelper(resourcesPath);

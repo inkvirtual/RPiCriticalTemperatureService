@@ -48,7 +48,7 @@ public class ResourcesHelperValidParamsTest {
     }
 
     @Test
-    public void test_getString() throws Exception {
+    public void substringIsValidWhenArgumentsAreValid() throws Exception {
         init("/home/fanta/");
 
         Assert.assertEquals(expected, resourcesHelper.getSubstring(content, leftParam, rightParam));
