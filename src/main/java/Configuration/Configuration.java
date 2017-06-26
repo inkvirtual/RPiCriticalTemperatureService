@@ -60,7 +60,7 @@ public class Configuration {
 
     @Override
     public String toString() {
-        return "Configuration.Configuration{" +
+        return "Configuration{" +
                 "properties=" + properties +
                 '}';
     }

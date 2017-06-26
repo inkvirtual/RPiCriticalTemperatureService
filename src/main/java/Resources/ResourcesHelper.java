@@ -1,5 +1,6 @@
 package Resources;
 
+import Service.ServiceMain;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -32,7 +33,7 @@ public class ResourcesHelper {
 
     public String getFullPath(String fileName) {
         if (null == fileName || fileName.length() == 0) {
-            System.err.println("null or empty filename");
+            ServiceMain.LOGGER.error("Null or empty <filename> argument");
             return null;
         }
 
@@ -61,7 +62,7 @@ public class ResourcesHelper {
 
     public String getSubstring(String content, String leftParam, String rightParam) {
         if (content == null || content.length() == 0)
-            throw new IllegalArgumentException("Null or empty content");
+            throw new IllegalArgumentException("Null or empty <content>");
 
 //        if (leftParam == null || leftParam.length() == 0)
 //            throw new IllegalArgumentException("Null or empty leftParam");
@@ -78,7 +79,7 @@ public class ResourcesHelper {
         }
 
         if (beginIndex == -1)
-            throw new IllegalArgumentException("Incorrect leftParam");
+            throw new IllegalArgumentException("Incorrect <leftParam>");
 
         if (updatedContent == null)
             return null;
@@ -89,7 +90,7 @@ public class ResourcesHelper {
             endIndex = updatedContent.indexOf(rightParam);
 
         if (endIndex == -1)
-            throw new IllegalArgumentException("Incorrect rightParam");
+            throw new IllegalArgumentException("Incorrect <rightParam>");
 
         return updatedContent.substring(0, endIndex);
     }

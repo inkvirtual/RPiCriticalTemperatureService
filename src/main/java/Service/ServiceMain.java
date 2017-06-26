@@ -1,19 +1,23 @@
+package Service;
+
 import Resources.ResourcesHelper;
-import Service.IService;
-import Service.RPiCriticalTemperatureService;
 import Configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by fanta on 6/9/17.
  */
-public class Main {
+public class ServiceMain {
+    public static final Logger LOGGER = LoggerFactory.getLogger(ServiceMain.class);
+
     private static final String DEFAULT_RESOURCES_PATH = "/home/pi/HomeAutomation/RPiCriticalTemperatureService";
     private static final String SERVICE_PROPERTIES = "rpi_critical_temperature_service.properties";
 
     public static void main(String[] args) {
         Configuration configuration = initConfiguration(args);
 
-        IService service = new RPiCriticalTemperatureService(configuration);
+        IService service = new Service.RPiCriticalTemperatureService(configuration);
         service.start();
     }
 
@@ -30,18 +34,17 @@ public class Main {
         boolean useDefaultResPath = false;
 
         if (null != args && args.length > 1) {
-            //TODO: add proper logger !!!
-            System.err.println("too many arguments provided");
+            LOGGER.error("Too many arguments provided:{}", args );
             useDefaultResPath = true;
         } else if (null == args || args.length == 0) {
-            System.out.print("no argument provided");
+            LOGGER.error("No argument provided");
             useDefaultResPath = true;
         } else {
-            System.out.print("using resources path:" + args[0]);
+            LOGGER.info("Using resources path:{}", args[0]);
         }
 
         if (useDefaultResPath) {
-            System.out.println("Using default resources path:" + DEFAULT_RESOURCES_PATH);
+            LOGGER.info("Using default resources path:{}", DEFAULT_RESOURCES_PATH);
             return DEFAULT_RESOURCES_PATH;
         }
 

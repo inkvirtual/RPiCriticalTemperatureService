@@ -44,13 +44,13 @@ public class RPiCriticalTemperatureService implements IService {
 
         controller = new Controller(configuration.getResourcesHelper());
 
-        System.out.println(config.toString());
+        ServiceMain.LOGGER.info(config.toString());
     }
 
     @Override
     public void start() {
-        System.out.println("----------------------------------------");
-        System.out.println("RPi Critical Temperature Service started!\n");
+        ServiceMain.LOGGER.info("----------------------------------------");
+        ServiceMain.LOGGER.info("RPi Critical Temperature Service started!\n");
         sleep(2_000);
 
         double cpuTemperature;
@@ -59,16 +59,13 @@ public class RPiCriticalTemperatureService implements IService {
         while (!stopExecution()) {
             cpuTemperature = controller.getCpuTemperature();
 
-            // DEBUG
-            {
-                System.out.println("DEBUG: Cpu Temp: " + cpuTemperature + "C");
-            }
-
+            // Switch to debug
+                ServiceMain.LOGGER.info("DEBUG: Cpu Temp: {}C", cpuTemperature);
 
             // If critical temperature detected
             if (cpuTemperature >= shutdownTempC) {
-                System.out.println("WARN: CPU Temperature: " + cpuTemperature + "C, shutdown temperature: " + shutdownTempC + "C");
-                System.out.println("\nCRITICAL: Critical temperature detected, shutting down Raspberry Pi...");
+                ServiceMain.LOGGER.info("WARN: CPU Temperature: {}C, shutdown temperature: {}", cpuTemperature, shutdownTempC);
+                ServiceMain.LOGGER.error("\nCRITICAL: Critical temperature detected, shutting down Raspberry Pi...");
 
                 controller.shutdown();
                 serviceTerminated = true;
@@ -78,15 +75,13 @@ public class RPiCriticalTemperatureService implements IService {
             if (shutdownOnThrottle) {
                 cpuFrequency = controller.getCpuFrequency();
 
-                // DEBUG
-                {
-                    System.out.println("DEBUG: CPU Frequency: " + cpuFrequency + "MHz");
-                }
+                // Switch to debug
+                    ServiceMain.LOGGER.info("DEBUG: CPU Frequency: {}MHz", cpuFrequency);
 
                 // Shutdown if CPU throttling detected
                 if (controller.isCpuThrottling()) {
-                    System.out.println("WARN: CPU Throttling detected: " + cpuFrequency + "MHz");
-                    System.out.println("\nCRITICAL: Shutting down Raspberry Pi...");
+                    ServiceMain.LOGGER.info("WARN: CPU Throttling detected: {}MHz", cpuFrequency);
+                    ServiceMain.LOGGER.error("\nCRITICAL: Shutting down Raspberry Pi...");
 
                     controller.shutdown();
                     serviceTerminated = true;
@@ -96,8 +91,8 @@ public class RPiCriticalTemperatureService implements IService {
             sleep(checkTempIntervalS * 1_000);
         }
 
-        System.out.println("\n-------------------------------------------");
-        System.out.println("RPi Critical Temperature Service Terminated!");
+        ServiceMain.LOGGER.info("\n-------------------------------------------");
+        ServiceMain.LOGGER.info("RPi Critical Temperature Service Terminated!");
     }
 
     private boolean stopExecution() {

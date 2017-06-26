@@ -1,6 +1,7 @@
 import RaspberryPi.Cpu;
 import RaspberryPi.PiBash;
 import Resources.ResourcesHelper;
+import Service.ServiceMain;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
 public class CpuParameterizedTest {
+//    private static final Logger LOGGER = LoggerFactory.getLogger(CpuParameterizedTest.class);
+
     private PiBash bash;
     private ResourcesHelper resourcesHelper;
     private Cpu cpu;
@@ -65,6 +68,8 @@ public class CpuParameterizedTest {
     public void checkIfCpuIsThrottling() throws Exception{
         when(resourcesHelper.getSubstring(any(), any(), any())).thenCallRealMethod();
         doReturn(("frequency(45)=" + String.valueOf(cpuFrequency))).when(bash).execute(anyString());
+
+        ServiceMain.LOGGER.info("checkIfCpuIsThrottling: CPU Frequency {}, expected to throttle:{}", cpuFrequency, cpuThrottlingExpected);
 
         Assert.assertEquals("CPU expected to throttle: " + cpu.isCpuThrottling() +
                 ", CPU Frequency: " + cpuFrequency + "MHz", cpuThrottlingExpected, cpuThrottlingExpected);
